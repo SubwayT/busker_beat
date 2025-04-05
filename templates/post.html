@@ -1,0 +1,35 @@
+<!-- templates/post.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿フォーム | Busker Beat</title>
+</head>
+<body>
+    <h1>投稿フォーム</h1>
+    <form action="/posting" method="POST">
+        <label for="artist_name">アーティスト名：</label><br>
+        <input type="text" id="artist_name"  name="artist_name"><br><br>
+
+        <label for="audience">動員数：</label><br>
+        <input type="number" id="audience" name="audience"><br><br>
+
+        <label for="amount">投げ銭額：</label><br>
+        <input type="number" id="amount" name="amount"><br><br>
+
+        <label for="setlist">セトリ：</label><br>
+        <textarea id="setlist" name="setlist"></textarea><br><br>
+
+        <label for="lat">緯度：</label><br>
+        <input type="text" id="lat" name="lat"><br><br>
+
+        <label for="lng">経度：</label><br>
+        <input type="text" id="lng" name="lng"><br><br>
+
+        <label for="event_date">開催日：</label><br>
+        <input type="date" id="event_date" name="event_date"><br><br>
+
+        <button type="submit">投稿する</button>
+    </form>
+</body>
+</html>

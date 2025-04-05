@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import psycopg2
 from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
 
@@ -13,11 +13,12 @@ def get_db_connection():
     )
     return conn
 
-# これを追加！
+#ルートURLにアクセスしたときの処理
 @app.route("/")
 def home():
     return "<h1>Hello from Busker Beat!</h1>"
 
+#テスト用のDB接続
 @app.route("/test-db")
 def test_db():
     try:
@@ -30,6 +31,11 @@ def test_db():
         return f"✅ DB接続成功！ユーザー数: {len(rows)}"
     except Exception as e:
         return f"❌ エラー: {e}"
+    
+#投稿フォーム
+@app.route("/post")
+def post_form():
+    return render_template("post.html")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=10000)
