@@ -13,6 +13,11 @@ def get_db_connection():
     )
     return conn
 
+# これを追加！
+@app.route("/")
+def home():
+    return "<h1>Hello from Busker Beat!</h1>"
+
 @app.route("/test-db")
 def test_db():
     try:
@@ -27,4 +32,4 @@ def test_db():
         return f"❌ エラー: {e}"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=10000)
