@@ -1,4 +1,4 @@
-DB_NAME = "g2450003"
-DB_USER = "g2450003"
-DB_PASSWORD = "xscaHWar"  
-DB_HOST = "localhost"
+DB_NAME = "busker_db"
+DB_USER = "busker_db_user"
+DB_PASSWORD = "ajouNAp9me5uAr0Nv0KjgwH0zWC7CQhs"  
+DB_HOST = "dpg-cvof62adbo4c73b2sbig-a"
