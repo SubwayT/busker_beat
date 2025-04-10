@@ -19,14 +19,13 @@ def home():
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM bb_posts ORDER BY id DESC;")
+        cur.execute("SELECT id, artist_name, lat, lng, amount, event_date, setlist FROM bb_posts;")
         posts = cur.fetchall()
         cur.close()
         conn.close()
-
-        return render_template("index.html", posts=posts)
+        return render_template("index.html", posts=posts)  
     except Exception as e:
-        return f"❌ 投稿一覧の読み込みに失敗しました: {e}"
+        return f"❌ 地図用データの読み込みに失敗しました: {e}"
 
 #テスト用のDB接続
 @app.route("/test-db")
@@ -80,20 +79,6 @@ def posting():
     except Exception as e:
         return f"❌ 投稿に失敗しました: {e}"
 
-#地図表示
-
-@app.route("/map")
-def map_view():
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT id, artist_name, lat, lng, amount, event_date, setlist FROM bb_posts;")
-        posts = cur.fetchall()
-        cur.close()
-        conn.close()
-        return render_template("map.html", posts=posts)
-    except Exception as e:
-        return f"❌ 地図用データの読み込みに失敗しました: {e}"
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=10000)
