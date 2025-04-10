@@ -7,7 +7,7 @@
     <!-- Leaflet　CSS -->
     <link 
         rel="stylesheet" 
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+        href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" 
     />
     <!-- カスタム　CSS -->
     <style>
@@ -16,7 +16,7 @@
 
     <!-- Leaflet　JS -->
     <script 
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         defer
     ></script>
 </head>
@@ -26,7 +26,7 @@
     <div id="map"></div>
     <!-- 地図の初期化 -->
     <script>
-      const map = L.map('map').setView([35.6812, 139.7671], 13);  // 東京駅
+      const map = L.map('map').setView([35.6812, 139.7671], 13);  // 東京駅  
         // 地図のタイルレイヤーを追加
         L.tileLayer(
             'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
