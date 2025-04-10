@@ -57,6 +57,19 @@
         `);
     });
 
+    // ここから追加：地図クリックで緯度経度を取得＆モーダル表示
+    map.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+
+        // モーダルを表示
+        document.getElementById("postModal").style.display = "block";
+
+        // 緯度経度の入力欄に自動入力
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+    });
+
     // モーダル開閉JS
     document.getElementById("openModalBtn").onclick = () => {
         document.getElementById("postModal").style.display = "block";
