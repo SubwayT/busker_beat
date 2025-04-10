@@ -1,8 +1,48 @@
+<!-- 地図表示 -->
 <div id="map" style="height: 600px; width: 100%;"></div>
+
+<!-- ＋投稿ボタン -->
+<button id="openModalBtn" style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+    ＋投稿
+</button>
+
+<!-- 投稿モーダル -->
+<div id="postModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); z-index: 2000;">
+    <div style="background: white; width: 90%; max-width: 500px; margin: 50px auto; padding: 20px; position: relative;">
+        <button id="closeModalBtn" style="position: absolute; top: 10px; right: 10px;">×</button>
+        <h2>投稿フォーム</h2>
+        <form action="/posting" method="POST">
+            <label for="artist_name">アーティスト名：</label><br>
+            <input type="text" id="artist_name" name="artist_name"><br><br>
+
+            <label for="audience">動員数：</label><br>
+            <input type="number" id="audience" name="audience"><br><br>
+
+            <label for="amount">投げ銭額：</label><br>
+            <input type="number" id="amount" name="amount"><br><br>
+
+            <label for="setlist">セトリ：</label><br>
+            <textarea id="setlist" name="setlist"></textarea><br><br>
+
+            <label for="lat">緯度：</label><br>
+            <input type="text" id="lat" name="lat"><br><br>
+
+            <label for="lng">経度：</label><br>
+            <input type="text" id="lng" name="lng"><br><br>
+
+            <label for="event_date">開催日：</label><br>
+            <input type="date" id="event_date" name="event_date"><br><br>
+
+            <button type="submit">投稿する</button>
+        </form>
+    </div>
+</div>
+
+<!-- 投稿データのマーカー -->
 <script>
     const posts = JSON.parse('{{ posts | tojson | safe }}');
     const map = L.map('map').setView([35.6812, 139.7671], 6);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
@@ -16,4 +56,12 @@
             セトリ: ${post[6]}
         `);
     });
+
+    // モーダル開閉JS
+    document.getElementById("openModalBtn").onclick = () => {
+        document.getElementById("postModal").style.display = "block";
+    };
+    document.getElementById("closeModalBtn").onclick = () => {
+        document.getElementById("postModal").style.display = "none";
+    };
 </script>
