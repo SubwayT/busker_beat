@@ -40,11 +40,6 @@ def test_db():
         return f"✅ DB接続成功！ユーザー数: {len(rows)}"
     except Exception as e:
         return f"❌ エラー: {e}"
-    
-#投稿フォーム
-@app.route("/post")
-def post_form():
-    return render_template("post.html")
 
 #投稿処理
 @app.route("/posting", methods=["POST"])
