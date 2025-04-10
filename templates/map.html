@@ -7,25 +7,22 @@
     <link 
         rel="stylesheet" 
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
-        integrity="sha256-sA+qNn+WBi/xG3u3hzBq6Jm5pA0Un+nzRQGD2g9LBkU="
-        crossorigin=""
     />
+    <!-- LeafletのCSSを読み込み -->
     <style>
         #map { height: 600px; width: 100%; }
     </style>
+
+    <!-- Leaflet読み込み -->
+    <script 
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        defer
+    ></script>
 </head>
 
 <body>
     <h1>Busker Beat マップ</h1>
     <div id="map"></div>
-    
-    <!-- Leaflet読み込み -->
-    <script 
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-vt4rZh8+zAJ9DW3K6Dq2FcHnZVnj8hZr2X0F1A+UEq0="
-        crossorigin=""
-    ></script>
-
     <!-- 地図の初期化 -->
     <script>
       const map = L.map('map').setView([35.6812, 139.7671], 13);  // 東京駅
