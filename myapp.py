@@ -81,9 +81,19 @@ def posting():
         return f"❌ 投稿に失敗しました: {e}"
 
 #地図表示
+
 @app.route("/map")
 def map_view():
-    return render_template("map.html")
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id, artist_name, lat, lng, amount, event_date, setlist FROM bb_posts;")
+        posts = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render_template("map.html", posts=posts)
+    except Exception as e:
+        return f"❌ 地図用データの読み込みに失敗しました: {e}"
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=10000)
