@@ -16,7 +16,17 @@ def get_db_connection():
 #ルートURLにアクセスしたときの処理
 @app.route("/")
 def home():
-    return "<h1>Hello from Busker Beat!</h1>"
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM bb_posts ORDER BY id DESC;")
+        posts = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        return render_template("index.html", posts=posts)
+    except Exception as e:
+        return f"❌ 投稿一覧の読み込みに失敗しました: {e}"
 
 #テスト用のDB接続
 @app.route("/test-db")
