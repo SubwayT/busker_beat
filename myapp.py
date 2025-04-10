@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import psycopg2
 from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
 
@@ -44,36 +44,41 @@ def test_db():
 #投稿処理
 @app.route("/posting", methods=["POST"])
 def posting():
-    artist_name = request.form["artist_name"]
-    audience = request.form["audience"]
-    amount = request.form["amount"]
-    setlist = request.form["setlist"]
-    lat = request.form["lat"]
-    lng = request.form["lng"]
-    event_date = request.form["event_date"]
-
     try:
-        conn = psycopg2.connect(
-            dbname=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST
-        )
-        cur = conn.cursor()
+        artist_name = request.form["artist_name"]
+        audience = request.form["audience"]
+        amount = request.form["amount"]
+        setlist = request.form["setlist"]
+        lat = request.form["lat"]
+        lng = request.form["lng"]
+        event_date = request.form["event_date"]
 
+        conn = get_db_connection()
+        cur = conn.cursor()
         cur.execute("""
             INSERT INTO bb_posts (user_id, artist_name, lat, lng, audience, setlist, amount, event_date)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """, (1, artist_name, lat, lng, audience, setlist, amount, event_date))
-
         conn.commit()
         cur.close()
         conn.close()
 
-        return redirect("/")  # 投稿完了後はトップページへ（仮）
-    except Exception as e:
-        return f"❌ 投稿に失敗しました: {e}"
+        # 成功時に投稿情報をJSONで返す
+        return jsonify({
+            "success": True,
+            "artist_name": artist_name,
+            "lat": float(lat),
+            "lng": float(lng),
+            "amount": amount,
+            "event_date": event_date,
+            "setlist": setlist
+        })
 
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        })
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=10000)

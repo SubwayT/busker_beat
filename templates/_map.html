@@ -12,7 +12,7 @@
     <div style="background: white; width: 90%; max-width: 500px; margin: 50px auto; padding: 20px; position: relative;">
         <button id="closeModalBtn" style="position: absolute; top: 10px; right: 10px;">×</button>
         <h2>投稿フォーム</h2>
-        <form action="/posting" method="POST">
+        <form id="postForm">
             <label for="artist_name">アーティスト名：</label><br>
             <input type="text" id="artist_name" name="artist_name"><br><br>
 
@@ -77,4 +77,34 @@
     document.getElementById("closeModalBtn").onclick = () => {
         document.getElementById("postModal").style.display = "none";
     };
+
+    document.getElementById("postForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // ページリロードを防ぐ
+
+        const formData = new FormData(e.target);
+
+        fetch("/posting", {
+            method: "POST",
+            body: formData,
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // markerを追加
+                const marker = L.marker([data.lat, data.lng]).addTo(map);
+                marker.bindPopup(`
+                    <strong>${data.artist_name}</strong><br>
+                    開催日: ${data.event_date}<br>
+                    投げ銭: ${data.amount}円<br>
+                    セトリ: ${data.setlist}
+                `);
+                marker.openPopup();
+
+                e.target.reset();
+                document.getElementById("postModal").style.display = "none";
+            } else {
+                alert("❌ 投稿失敗: " + data.error);
+            }
+        });
+    });
 </script>
