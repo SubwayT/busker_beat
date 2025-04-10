@@ -26,33 +26,7 @@
 
 <body>
     <h1>Busker Beat マップ</h1>
-    <div id="map"></div>
-
-    <!--投稿データをJSに渡す-->
-    <script>
-        const posts = JSON.parse('{{ posts | tojson | safe }}');
-    </script>
-
-    <!-- 地図の初期化 -->
-    <script>
-      const map = L.map('map').setView([35.6812, 139.7671], 13);  // 東京駅  
-        // 地図のタイルレイヤーを追加
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-            {
-                attribution: '&copy; OpenStreetMap contributors'
-            }
-        ).addTo(map);
-        // 投稿データをマーカーとして地図に追加
-        posts.forEach(post => {
-            const marker = L.marker([post[2], post[3]]).addTo(map);
-            marker.bindPopup(`
-                <strong>${post[1]}</strong><br>
-                開催日: ${post[5]}<br>
-                投げ銭: ${post[4]}円<br>
-                セトリ: ${post[6]}
-            `);
-        });
-    </script>
+    {% include "_map.html" %}
+    {% include "_post_cards.html" %}
 </body>
 </html>
