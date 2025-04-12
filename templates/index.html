@@ -26,6 +26,11 @@
 
 <body>
     <h1>Busker Beat</h1>
+    {% if session.user_id %}
+        <p>ようこそ、ログイン中（ユーザーID: {{ session.user_id }}）！</p>
+    {% else %}
+        <p>ログインしていません。</p>
+    {% endif %}
     {% include "_map.html" %}
     {% include "_post_cards.html" %}
 </body>
