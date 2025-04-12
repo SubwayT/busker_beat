@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Busker Beat - マップ</title>
+    <!-- static css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <!-- Leaflet　CSS -->
     <link 
         rel="stylesheet" 
@@ -25,21 +27,20 @@
 </head>
 
 <body>
-    <h1>Busker Beat</h1>
-    {% if session.user_id %}
-    <button onclick="location.href='/logout'" style="position: absolute; top: 20px; left: 120px; z-index: 1000;">
-        ログアウト
-    </button>
-    {% endif %}
-    <div id="auth-buttons" style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
-        {% if session.get("user_id") %}
-            <span>ようこそ、ログイン中（ユーザーID: {{ session["user_id"] }}）！</span>
-            <a href="/logout">ログアウト</a>
-        {% else %}
-            <button id="loginBtn">ログイン</button>
-            <button id="signupBtn">新規登録</button>
-        {% endif %}
+    <!-- ヘッダー（右上ナビゲーション） -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
+        <h1 style="margin: 0;">Busker Beat</h1>
+        <div>
+            {% if session.get("user_id") %}
+                <span>ログイン中（ユーザーID: {{ session["user_id"] }}）</span>
+                <a href="/logout" style="margin-left: 10px;">ログアウト</a>
+            {% else %}
+                <button id="loginBtn">ログイン</button>
+                <button id="signupBtn" onclick="location.href='/signup'" style="margin-left: 10px;">新規登録</button>
+            {% endif %}
+        </div>
     </div>
+
     {% include "_auth_modal.html" %}
     {% include "_map.html" %}
     {% include "_post_cards.html" %}
