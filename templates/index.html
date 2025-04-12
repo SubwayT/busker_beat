@@ -26,11 +26,15 @@
 
 <body>
     <h1>Busker Beat</h1>
-    {% if session.user_id %}
-        <p>ようこそ、ログイン中（ユーザーID: {{ session.user_id }}）！</p>
-    {% else %}
-        <p>ログインしていません。</p>
-    {% endif %}
+    <div id="auth-buttons" style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
+        {% if session.get("user_id") %}
+            <span>ようこそ、ログイン中（ユーザーID: {{ session["user_id"] }}）！</span>
+            <a href="/logout">ログアウト</a>
+        {% else %}
+            <button id="loginBtn">ログイン</button>
+            <button id="signupBtn">新規登録</button>
+        {% endif %}
+    </div>
     {% include "_map.html" %}
     {% include "_post_cards.html" %}
 </body>
