@@ -55,6 +55,12 @@ def login():
     else:
         return "❌ ログイン失敗：ユーザー名またはパスワードが違います"
 
+#ログアウト処理
+@app.route("/logout")
+def logout():
+    session.clear()  # セッション全消去
+    return redirect("/")  # ホームへ戻す
+
 #テスト用のDB接続
 @app.route("/test-db")
 def test_db():

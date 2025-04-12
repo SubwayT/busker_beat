@@ -26,6 +26,11 @@
 
 <body>
     <h1>Busker Beat</h1>
+    {% if session.user_id %}
+    <button onclick="location.href='/logout'" style="position: absolute; top: 20px; left: 120px; z-index: 1000;">
+        ログアウト
+    </button>
+    {% endif %}
     <div id="auth-buttons" style="position: absolute; top: 20px; left: 20px; z-index: 1000;">
         {% if session.get("user_id") %}
             <span>ようこそ、ログイン中（ユーザーID: {{ session["user_id"] }}）！</span>
