@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import psycopg2
+import os
 from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
 from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "fallback_dev_key")
 
 def get_db_connection():
     conn = psycopg2.connect(
@@ -27,6 +30,30 @@ def home():
         return render_template("index.html", posts=posts)  
     except Exception as e:
         return f"❌ 地図用データの読み込みに失敗しました: {e}"
+
+#ログインページ
+@app.route("/login", methods=["GET"])
+def login_form():
+    return render_template("login.html")
+
+# ログイン処理
+@app.route("/login", methods=["POST"])
+def login():
+    uname = request.form["uname"]
+    pw = request.form["pw"]
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, pw FROM bb_users WHERE uname = %s", (uname,))
+    user = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if user and check_password_hash(user[1], pw):
+        session["user_id"] = user[0]
+        return redirect("/")
+    else:
+        return "❌ ログイン失敗：ユーザー名またはパスワードが違います"
 
 #テスト用のDB接続
 @app.route("/test-db")
