@@ -1,0 +1,23 @@
+<!-- templates/signup.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー登録</title>
+</head>
+<body>
+    <h1>新規ユーザー登録</h1>
+    <form action="/signup" method="POST">
+        <label for="uname">ユーザー名：</label><br>
+        <input type="text" id="uname" name="uname"><br><br>
+
+        <label for="email">メールアドレス：</label><br>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="password">パスワード：</label><br>
+        <input type="password" id="password" name="pw"><br><br>
+
+        <button type="submit">登録する</button>
+    </form>
+</body>
+</html>

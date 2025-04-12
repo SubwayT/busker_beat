@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, session, jsonify
 import psycopg2
 from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
@@ -40,6 +41,35 @@ def test_db():
         return f"✅ DB接続成功！ユーザー数: {len(rows)}"
     except Exception as e:
         return f"❌ エラー: {e}"
+
+# ユーザー登録ページ（フォーム）
+@app.route("/signup", methods=["GET"])
+def signup_form():
+    return render_template("signup.html")
+
+# ユーザー登録処理
+@app.route("/signup", methods=["POST"])
+def signup_post():
+    uname = request.form["uname"]
+    email = request.form["email"]
+    pw = request.form["pw"]
+
+    hashed_pw = generate_password_hash(pw)
+
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO bb_users (uname, email, pw)
+            VALUES (%s, %s, %s)
+        """, (uname, email, hashed_pw))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return redirect("/")  # サインアップ後はトップへ
+    except Exception as e:
+        return f"❌ ユーザー登録に失敗しました: {e}"
 
 #投稿処理
 @app.route("/posting", methods=["POST"])
