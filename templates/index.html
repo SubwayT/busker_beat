@@ -42,7 +42,20 @@
     </div>
 
     {% include "_auth_modal.html" %}
-    {% include "_map.html" %}
+
+    <!-- メイン画面：2カラム構成 -->
+    <div style="display: flex;">
+        <!-- 左カラム：投稿一覧 -->
+        <div style="width: 30%; max-height: calc(100vh - 100px); overflow-y: auto; border-right: 1px solid #ccc; padding: 16px;">
+            {% include "_post_cards.html" %}
+        </div>
+
+        <!-- 右カラム：地図エリア -->
+        <div style="width: 70%;">
+            {% include "_map.html" %}
+        </div>
+    </div>
+
     {% include "_post_cards.html" %}
 </body>
 </html>
