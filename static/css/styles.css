@@ -70,9 +70,9 @@ a:hover {
 }
 
 .card {
-    background-color: #b71c1c;
-    color: #ffffff;
-    border: 1px solid #ffffff;
+    background-color: #111;  /* 濃い黒背景 */
+    color: #fff;             /* 白文字 */
+    border: 1px solid #444;  /* 少し薄めの境界線 */
     padding: 10px;
     margin: 10px 0;
     border-radius: 8px;
