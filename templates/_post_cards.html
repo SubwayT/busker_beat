@@ -1,9 +1,11 @@
-<h2>投稿一覧</h2>
-{% for post in posts %}
-<div class="card">
-    <p><strong>アーティスト名：</strong> {{ post[1] }}</p>
-    <p><strong>開催日：</strong> {{ post[5] }}</p>
-    <p><strong>投げ銭：</strong> {{ post[4] }} 円</p>
-    <p><strong>セトリ：</strong> {{ post[6] }}</p>
+<div style="width: 300px; padding: 1rem;">
+    <h2>投稿一覧</h2>
+    {% for post in posts %}
+        <div class="card">
+            <p><strong>アーティスト名：</strong> {{ post[1] }}</p>
+            <p><strong>開催日：</strong> {{ post[8] }}</p>
+            <p><strong>投げ銭：</strong> {{ post[6] }} 円</p>
+            <p><strong>セトリ：</strong> {{ post[5] }}</p>
+        </div>
+    {% endfor %}
 </div>
-{% endfor %}
