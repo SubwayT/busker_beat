@@ -31,10 +31,6 @@ def home():
     except Exception as e:
         return f"❌ 地図用データの読み込みに失敗しました: {e}"
 
-#ログインページ
-@app.route("/login", methods=["GET"])
-def login_form():
-    return render_template("login.html")
 
 # ログイン処理
 @app.route("/login", methods=["POST"])
@@ -74,11 +70,6 @@ def test_db():
         return f"✅ DB接続成功！ユーザー数: {len(rows)}"
     except Exception as e:
         return f"❌ エラー: {e}"
-
-# ユーザー登録ページ（フォーム）
-@app.route("/signup", methods=["GET"])
-def signup_form():
-    return render_template("signup.html")
 
 # ユーザー登録処理
 @app.route("/signup", methods=["POST"])
